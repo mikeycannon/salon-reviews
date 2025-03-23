@@ -111,26 +111,20 @@ export const App = () => {
         <TextInput
           placeholder="Business ID"
           value={businessId}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setBusinessId(e.currentTarget.value)
-          }
+          onChange={setBusinessId}
         />
 
         <TextInput
           placeholder="Email (e.g. you@example.com)"
           value={email}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setEmail(e.currentTarget.value)
-          }
+          onChange={setEmail}
         />
 
         <TextInput
           placeholder="Password"
           value={password}
-          type="text" // UI Kit doesn't support "password"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.currentTarget.value)
-          }
+          type="text" // UI Kit doesn't support password
+          onChange={setPassword}
         />
 
         <Button
@@ -145,9 +139,7 @@ export const App = () => {
         {branches.length > 0 && (
           <Select
             value={branchId}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setBranchId(e.currentTarget.value)
-            }
+            onChange={setBranchId}
             options={branches.map((branch) => ({
               label: branch.name,
               value: branch.id,
