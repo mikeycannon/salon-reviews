@@ -46,8 +46,8 @@ describe("Hello World Tests", () => {
     expect(mockAddElement).not.toHaveBeenCalled();
 
     // get a reference to the do something cool button element
-    const doSomethingCoolBtn = result.getByRole("button", {
-      name: "Do something cool",
+    const insertHelloWorldBtn = result.getByRole("button", {
+      name: "Insert Hello World",
     });
 
     // programmatically simulate clicking the button
