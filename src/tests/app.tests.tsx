@@ -51,7 +51,7 @@ describe("Hello World Tests", () => {
     });
 
     // programmatically simulate clicking the button
-    fireEvent.click(doSomethingCoolBtn);
+    fireEvent.click(insertHelloWorldBtn);
 
     // we expect that addElement has been called by the button's click handler
     expect(mockAddElement).toHaveBeenCalled();
