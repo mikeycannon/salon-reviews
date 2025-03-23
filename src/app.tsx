@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Button,
   Rows,
@@ -10,23 +9,10 @@ import { requestOpenExternalUrl } from "@canva/platform";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as styles from "styles/components.css";
 import { useAddElement } from "utils/use_add_element";
+import React, { useState } from "react";
+import axios from "axios";
 
 export const DOCS_URL = "https://www.canva.dev/docs/apps/";
-
-// Types
-interface Branch {
-  id: string;
-  name: string;
-}
-
-interface Review {
-  id: string;
-  message: string;
-  rating: number;
-  client?: {
-    firstName?: string;
-  };
-}
 
 export const App = () => {
   const intl = useIntl();
@@ -35,23 +21,41 @@ export const App = () => {
   const [businessId, setBusinessId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [branches, setBranches] = useState<{ id: string; name: string }[]>([]);
   const [branchId, setBranchId] = useState("");
-  const [branches, setBranches] = useState<Branch[]>([]);
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const onClick = () => {
+    addElement({
+      type: "text",
+      children: ["Hello world!"],
+    });
+  };
+
+  const openExternalUrl = async (url: string) => {
+    await requestOpenExternalUrl({ url });
+  };
 
   const fetchBranches = async () => {
     setLoading(true);
     try {
-      const res = await fetch("https://your-render-backend-url.com/api/branches", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ businessId, email, password }),
-      });
-      const data = await res.json();
-      setBranches(data.branches);
-    } catch (err) {
-      console.error("Error fetching branches", err);
+      const response = await axios.get(
+        `https://salonreviews.netlify.app/api/branches`,
+        {
+          auth: {
+            username: `global/${email}`,
+            password,
+          },
+          headers: {
+            "phorest-api-key": "REPLACE_WITH_API_KEY",
+            "phorest-business-id": businessId,
+          },
+        }
+      );
+      setBranches(response.data.branches);
+    } catch (error) {
+      console.error("Error fetching branches:", error);
     } finally {
       setLoading(false);
     }
@@ -60,22 +64,32 @@ export const App = () => {
   const fetchReviews = async () => {
     setLoading(true);
     try {
-      const res = await fetch("https://your-render-backend-url.com/api/reviews", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ businessId, email, password, branchId }),
-      });
-      const data = await res.json();
-      setReviews(data.reviews);
-    } catch (err) {
-      console.error("Error fetching reviews", err);
+      const response = await axios.get(
+        `https://salonreviews.netlify.app/api/reviews?branchId=${branchId}`,
+        {
+          auth: {
+            username: `global/${email}`,
+            password,
+          },
+          headers: {
+            "phorest-api-key": "REPLACE_WITH_API_KEY",
+            "phorest-business-id": businessId,
+          },
+        }
+      );
+      setReviews(response.data.reviews);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const insertReview = (text: string) => {
-    addElement({ type: "text", children: [text] });
+  const insertReview = (message: string) => {
+    addElement({
+      type: "text",
+      children: [message],
+    });
   };
 
   return (
@@ -83,32 +97,44 @@ export const App = () => {
       <Rows spacing="2u">
         <Text>
           <FormattedMessage
-            defaultMessage="To make changes to this app, edit the <code>src/app.tsx</code> file, then close and reopen the app in the editor to preview the changes."
+            defaultMessage="
+              To make changes to this app, edit the <code>src/app.tsx</code> file,
+              then close and reopen the app in the editor to preview the changes.
+            "
             description="Instructions for how to make changes to the app. Do not translate <code>src/app.tsx</code>."
-            values={{ code: (chunks) => <code>{chunks}</code> }}
+            values={{
+              code: (chunks) => <code>{chunks}</code>,
+            }}
           />
         </Text>
 
         <TextInput
           placeholder="Business ID"
           value={businessId}
-          onChange={(e) => setBusinessId(e.currentTarget.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setBusinessId(e.currentTarget.value)
+          }
         />
 
         <TextInput
           placeholder="Email (e.g. you@example.com)"
           value={email}
-          onChange={(e) => setEmail(e.currentTarget.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(e.currentTarget.value)
+          }
         />
 
         <TextInput
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.currentTarget.value)}
+          type="text" // UI Kit doesn't support "password"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(e.currentTarget.value)
+          }
         />
 
         <Button
-          variant="primary"
+          variant="secondary"
           onClick={fetchBranches}
           disabled={loading}
           stretch
@@ -119,23 +145,20 @@ export const App = () => {
         {branches.length > 0 && (
           <Select
             value={branchId}
-            onChange={(e) => {
-              const target = e.currentTarget as HTMLSelectElement;
-              setBranchId(target.value);
-            }}
-          >
-            {branches.map((branch) => (
-              <option key={branch.id} value={branch.id}>
-                {branch.name}
-              </option>
-            ))}
-          </Select>
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setBranchId(e.currentTarget.value)
+            }
+            options={branches.map((branch) => ({
+              label: branch.name,
+              value: branch.id,
+            }))}
+          />
         )}
 
         <Button
-          variant="secondary"
+          variant="primary"
           onClick={fetchReviews}
-          disabled={loading || !branchId}
+          disabled={loading}
           stretch
         >
           Fetch Reviews
@@ -143,35 +166,36 @@ export const App = () => {
 
         {reviews.map((review) => (
           <div key={review.id}>
-            <Text>
-              <strong>{review.client?.firstName || "Client"}:</strong>{" "}
-              {review.message}
-            </Text>
+            <strong>{review.client?.firstName || "Client"}:</strong>{" "}
+            {review.message}
             <Text>⭐ {review.rating}</Text>
             <Button
-              variant="primary"
+              variant="secondary"
               onClick={() => insertReview(review.message)}
-              stretch
             >
-              Insert into Design
+              Insert Review
             </Button>
           </div>
         ))}
 
-        <Button
-          variant="tertiary"
-          onClick={() => addElement({ type: "text", children: ["Hello world!"] })}
-          stretch
-        >
-          Insert Hello World
+        <Button variant="primary" onClick={onClick} stretch>
+          {intl.formatMessage({
+            defaultMessage: "Insert Hello World",
+            description:
+              "Button text to do something cool. Creates a new text element when pressed.",
+          })}
         </Button>
 
         <Button
-          variant="tertiary"
-          onClick={() => requestOpenExternalUrl({ url: DOCS_URL })}
+          variant="secondary"
+          onClick={() => openExternalUrl(DOCS_URL)}
           stretch
         >
-          Open Canva Apps SDK docs
+          {intl.formatMessage({
+            defaultMessage: "Open Canva Apps SDK docs",
+            description:
+              "Button text to open Canva Apps SDK docs. Opens an external URL when pressed.",
+          })}
         </Button>
       </Rows>
     </div>
