@@ -11,7 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as styles from "styles/components.css";
 import { useAddElement } from "utils/use_add_element";
 
-const DOCS_URL = "https://www.canva.dev/docs/apps/";
+export const DOCS_URL = "https://www.canva.dev/docs/apps/";
 
 // Types
 interface Branch {
