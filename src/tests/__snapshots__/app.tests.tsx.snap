@@ -18,6 +18,49 @@ exports[`Hello World Tests should have a consistent snapshot 1`] = `
         </code>
          file, then close and reopen the app in the editor to preview the changes.
       </p>
+      <div
+        class="SNEyeQ XLEWAA Pe8c4g"
+      >
+        <input
+          class="bCVoGQ aWBg0w n1hUmA"
+          dir="auto"
+          placeholder="Business ID"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="SNEyeQ XLEWAA Pe8c4g"
+      >
+        <input
+          class="bCVoGQ aWBg0w n1hUmA"
+          dir="auto"
+          placeholder="Email (e.g. you@example.com)"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="SNEyeQ XLEWAA Pe8c4g"
+      >
+        <input
+          class="bCVoGQ aWBg0w n1hUmA"
+          dir="auto"
+          placeholder="Password"
+          type="text"
+          value=""
+        />
+      </div>
+      <button
+        class="_5KtATA LQzFZw VgvqkQ _8ERLTg Z3nT2A LQzFZw VgvqkQ _4_iekA _3oHQrw j34Zww aqbYPg _3FvZZg"
+        type="button"
+      >
+        <span
+          class="khPe7Q"
+        >
+          Fetch Locations
+        </span>
+      </button>
       <button
         class="_5KtATA LQzFZw VgvqkQ _8ERLTg rV61VQ LQzFZw VgvqkQ _4_iekA _3oHQrw j34Zww aqbYPg _3FvZZg"
         type="button"
@@ -25,11 +68,21 @@ exports[`Hello World Tests should have a consistent snapshot 1`] = `
         <span
           class="khPe7Q"
         >
-          Do something cool
+          Fetch Reviews
         </span>
       </button>
       <button
-        class="_5KtATA LQzFZw VgvqkQ _8ERLTg Z3nT2A LQzFZw VgvqkQ _4_iekA j34Zww aqbYPg _3FvZZg"
+        class="_5KtATA LQzFZw VgvqkQ _8ERLTg rV61VQ LQzFZw VgvqkQ _4_iekA _3oHQrw j34Zww aqbYPg _3FvZZg"
+        type="button"
+      >
+        <span
+          class="khPe7Q"
+        >
+          Insert Hello World
+        </span>
+      </button>
+      <button
+        class="_5KtATA LQzFZw VgvqkQ _8ERLTg Z3nT2A LQzFZw VgvqkQ _4_iekA _3oHQrw j34Zww aqbYPg _3FvZZg"
         type="button"
       >
         <span
