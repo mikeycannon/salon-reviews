@@ -6,6 +6,7 @@
   padding-top: var(--ui-kit-space-2);
   padding-right: var(--ui-kit-space-2);
   padding-bottom: var(--ui-kit-space-2);
+  padding: 16px;
 
   /* for firefox */
   scrollbar-width: thin;
@@ -35,4 +36,16 @@
 .scrollContainer:focus::-webkit-scrollbar-thumb,
 .scrollContainer:focus-within::-webkit-scrollbar-thumb {
   visibility: visible;
+}
+
+.reviewCard {
+  padding: 16px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  background-color: #ffffff;
+}
+
+.reviewCard:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
