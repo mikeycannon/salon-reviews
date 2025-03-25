@@ -8,8 +8,8 @@ import {
   Checkbox,
 } from "@canva/app-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
-import * as styles from "styles/components.css";
-import { useAddElement } from "utils/use_add_element";
+import * as styles from "../styles/components.css";
+import { useAddElement } from "../utils/use_add_element";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
