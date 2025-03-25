@@ -15,7 +15,6 @@ import axios from "axios";
 
 // API Configuration
 const API_BASE_URL = process.env.PHOREST_API_URL || "https://api.phorest.com/api/v2";
-const API_KEY = process.env.PHOREST_API_KEY;
 
 interface SavedCredentials {
   businessId: string;
@@ -139,9 +138,6 @@ export const App = () => {
             username: `global/${email}`,
             password,
           },
-          headers: {
-            "phorest-api-key": API_KEY,
-          },
         }
       );
       setBranches(response.data.branches);
@@ -179,9 +175,6 @@ export const App = () => {
           auth: {
             username: `global/${email}`,
             password,
-          },
-          headers: {
-            "phorest-api-key": API_KEY,
           },
         }
       );
