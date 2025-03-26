@@ -21,7 +21,7 @@ type DevConfig = {
 
 export function buildConfig({
   devConfig,
-  appEntry = path.join(process.cwd(), "src", "index.tsx"),
+  appEntry = path.join(process.cwd(), "src", "entry.tsx"),
   backendHost = process.env.CANVA_BACKEND_HOST,
 }: {
   devConfig?: DevConfig;
@@ -173,6 +173,10 @@ export function buildConfig({
     plugins: [
       new DefinePlugin({
         BACKEND_HOST: JSON.stringify(backendHost),
+        'process.env': {
+          PHOREST_API_URL: JSON.stringify(process.env.PHOREST_API_URL),
+          NODE_ENV: JSON.stringify(mode)
+        }
       }),
       // Apps can only submit a single JS file via the developer portal
       new optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
